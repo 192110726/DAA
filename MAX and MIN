@@ -1,0 +1,46 @@
+#include <stdio.h>
+void findMinAndMax(int arr[], int left, int right, int *min, int *max) {
+    if (left == right) {
+        *min = arr[left];
+        *max = arr[left];
+        return;
+    }
+    if (right - left == 1) {
+        if (arr[left] < arr[right]) {
+            *min = arr[left];
+            *max = arr[right];
+        } else {
+            *min = arr[right];
+            *max = arr[left];
+        }
+        return;
+    }
+    int mid = (left + right) / 2;
+    int leftMin, leftMax, rightMin, rightMax;
+    findMinAndMax(arr, left, mid, &leftMin, &leftMax);
+    findMinAndMax(arr, mid + 1, right, &rightMin, &rightMax);
+    if (leftMin < rightMin) {
+        *min = leftMin;
+    } else {
+        *min = rightMin;
+    }
+
+    if (leftMax > rightMax) {
+        *max = leftMax;
+    } else {
+        *max = rightMax;
+    }
+}
+int main() {
+    int arr[] = {12, 45, 67, 8, 23, 56, 14, 7};
+    int size = sizeof(arr) / sizeof(arr[0]);
+
+    int min, max;
+
+    findMinAndMax(arr, 0, size - 1, &min, &max);
+
+    printf("Minimum value: %d\n", min);
+    printf("Maximum value: %d\n", max);
+
+    return 0;
+}
